@@ -1,6 +1,6 @@
 <template>
-  <header class="max-w-5xl mx-auto py-8 flex">
-    <nav>
+  <header class="container mx-auto py-8 flex">
+    <nav class="">
       <ul>
         <li>
           <nuxt-link
@@ -38,14 +38,14 @@
             English
           </nuxt-link>
         </li>
-        <li>
+        <!-- <li>
           <nuxt-link
             class="text-teal-600 hover:underline"
             to="/de"
           >
             German
           </nuxt-link>
-        </li>
+        </li> -->
       </ul>
     </nav>
   </header>

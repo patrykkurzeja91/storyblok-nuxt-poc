@@ -3,13 +3,11 @@
     <h2 class="py-10 text-center font-bold text-4xl">
       Articles Overview
     </h2>
-    {{ articles }}
-    <ul class="flex py-6 mb-6">
+    <ul class="container grid-wrapper py-6 mb-6 mx-auto">
       <li
-        v-for="article in stories"
-        :key="article._uid"
-        class="flex-auto px-6"
-        style="min-width: 33%;"
+        v-for="article in sortedStories"
+        :key="article.uuid"
+        class=""
       >
         <article-teaser
           v-if="article.content"
@@ -29,14 +27,13 @@
 
 <script>
 export default {
-
   asyncData (context) {
     const version = context.query._storyblok || context.isDev ? 'draft' : 'published'
     return context.app.$storyapi.get('cdn/stories', {
       starts_with: 'articles/',
       version,
     }).then((res) => {
-      return res.data
+      return { stories: res.data.stories }
     }).catch((res) => {
       if (!res.response) {
         console.error(res)
@@ -47,10 +44,20 @@ export default {
       }
     })
   },
-  data () {
-    return {
-      stories: [],
-    }
+  computed: {
+    sortedStories () {
+      return this.stories.map(i => i).sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+    },
   },
 }
 </script>
+
+<style scoped>
+.grid-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
+  background-color: #fff;
+  color: #444;
+}
+</style>

@@ -13,12 +13,13 @@
 export default {
   asyncData (context) {
     // // This what would we do in real project
-    // const version = context.query._storyblok || context.isDev ? 'draft' : 'published'
+    const version = context.query._storyblok || context.isDev ? 'draft' : 'published'
     // const fullSlug = (context.route.path == '/' || context.route.path == '') ? 'home' : context.route.path
-
+    console.log('context', context.store.state.articles)
+    console.log(context.isDev)
     // Load the JSON from the API - loadig the home content (index page)
     return context.app.$storyapi.get('cdn/stories/home', {
-      version: 'draft',
+      version,
     }).then((res) => {
       return res.data
     }).catch((res) => {
