@@ -29,10 +29,12 @@
 
 <script>
 export default {
+
   asyncData (context) {
+    const version = context.query._storyblok || context.isDev ? 'draft' : 'published'
     return context.app.$storyapi.get('cdn/stories', {
       starts_with: 'articles/',
-      version: 'draft',
+      version,
     }).then((res) => {
       return res.data
     }).catch((res) => {
